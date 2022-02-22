@@ -1,0 +1,25 @@
+Installation Step:
+
+Image: mikesplain/openvas
+
+Steps:
+  1. Create pod first
+  2. Copy /var/lib/openvas from pod into pv folder
+  3. Close pod created at step 1
+  4. Create new pod with pvc with same image, mount pvc on pod's /var/lib/openvas folder
+
+WHY to create pod twice?
+  Since no official document says where the data is stored at.
+  It means, the data is not permanently stored in host.
+  Therfore, I figured out this way to make it be stored permanently in host.
+  Now the data will not disappear everytime re-build the pod.
+
+
+How to practice in this case:
+  kubectl create -f pre-deploy.yaml
+  kubectl cp openvas<<PRESS TAB TO FILL UP THE POD NAME>>:/var/lib/openvas ./data
+  kubectl delete -f pre-deploy.yaml
+  kubectl create -f 000-vol.yaml -f 001-deploy.yaml -f 002-service.yaml
+
+NOTICE:
+  - The directory data must be 777 masked.

@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: openvas
+  name: openvas
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: openvas
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: openvas
+    spec:
+      containers:
+      - image: mikesplain/openvas
+        name: openvas
+        resources: {}
+        ports:
+        - containerPort: 443
+        - containerPort: 9390
+        env:
+        - name: PUBLIC_HOSTNAME
+          value: openvas.realme.com.tw
+status: {}
